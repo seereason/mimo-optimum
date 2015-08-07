@@ -1,0 +1,116 @@
+Name:               mimo-optimum
+Version:            1.0
+Synopsis:           App for MIMO
+Homepage:           https://github.com/seereason/mimo-optimum
+License:            BSD3
+Author:             David Fox
+Maintainer:         David Fox <dsf@seereason.com>
+Category:           Web
+Stability:          experimental
+Build-Type:         Custom
+Cabal-Version:      >=1.16
+
+flag local-mimo
+  Description: Use local source for mimo instead of installed library
+  Default: False
+  Manual: True
+
+Executable optimum-server
+  Default-Language: Haskell2010
+  Hs-Source-Dirs: src
+  if flag(local-mimo)
+    Hs-Source-Dirs: ../mimo, ../mimo/Common
+    Main-Is: ../mimo/Exec/Server.hs
+    Build-Depends:
+      acid-state,
+      applicative-extras,
+      data-default-instances-base,
+      data-default-instances-containers,
+      directory,
+      filepath,
+      happstack-jmacro,
+      haskell-src-exts,
+      ixset,
+      jmacro,
+      mimo,
+      reform,
+      safecopy,
+      syb,
+      th-orphans,
+      unix
+  else
+    Hs-Source-Dirs: /usr/share/mimo/Common
+    Main-Is: /usr/share/mimo/Exec/Server.hs
+    Build-Depends: mimo
+  GHC-Options: -O2 -threaded -Wall
+  Build-Depends:
+      base < 5,
+      Cabal,
+      containers,
+      data-default,
+      happstack-authenticate,
+      happstack-foundation,
+      hslogger,
+      hsp,
+      lens,
+      mtl,
+      mtl-unleashed,
+      process,
+      seereason-ports,
+      template-haskell,
+      text,
+      th-context,
+      th-desugar,
+      th-path,
+      th-typegraph,
+      time,
+      time-locale-compat
+
+Executable optimum-backups
+  Default-Language: Haskell2010
+  Hs-Source-Dirs: src
+  GHC-Options: -O2 -threaded -Wall
+  Build-Depends:
+    archive,
+    base < 5,
+    Cabal,
+    containers,
+    data-default,
+    happstack-authenticate,
+    happstack-foundation,
+    hsp,
+    lens,
+    mtl,
+    mtl-unleashed,
+    network-uri >= 2.6,
+    seereason-ports,
+    template-haskell,
+    text,
+    th-context,
+    th-desugar,
+    th-path,
+    th-typegraph,
+    time,
+    time-locale-compat
+  if flag(local-mimo)
+    Main-Is: ../../mimo/Exec/Backups.hs
+    Hs-Source-Dirs: ../mimo, ../mimo/Common
+    Build-Depends:
+      acid-state,
+      applicative-extras,
+      data-default-instances-base,
+      data-default-instances-containers,
+      directory,
+      filepath,
+      haskell-src-exts,
+      ixset,
+      reform,
+      safecopy,
+      seereason-ports,
+      syb,
+      th-orphans,
+      unix
+  else
+    Main-Is: /usr/share/mimo/Exec/Backups.hs
+    Build-Depends: mimo
+    Hs-Source-Dirs: /usr/share/mimo/Common
