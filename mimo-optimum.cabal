@@ -32,7 +32,6 @@ Executable optimum-server
       haskell-src-exts,
       ixset,
       jmacro,
-      mimo,
       reform,
       safecopy,
       syb,
