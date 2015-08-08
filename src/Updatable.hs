@@ -3,7 +3,7 @@
 {-# LANGUAGE TypeSynonymInstances #-}
 module Updatable where
 
-import App
+import Stage0
 import App.Stage1 (App)
 import MIMO.Updatable (Updatable(appForm))
 

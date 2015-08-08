@@ -3,19 +3,24 @@
 {-# LANGUAGE DeriveDataTypeable, FlexibleContexts, GeneralizedNewtypeDeriving, MultiParamTypeClasses,
              RecordWildCards, TemplateHaskell, TypeFamilies, UndecidableInstances #-}
 {-# OPTIONS_GHC -Wall #-}
-module Types where
+module Stage0 where
 
 import Data.Data (Data, Typeable)
 import Data.Default (Default(def))
 import Data.Set
 import Data.Text (Text)
+import Distribution.License (License(..))
 import Happstack.Authenticate.Core (UserId(..))
 import Happstack.Foundation ({-(<$>), Data, Typeable,-} PathInfo)
 import Language.Haskell.TH (nameBase)
 import Language.Haskell.TH.Path.Graph (SinkType)
 import Language.Haskell.TH.TypeGraph.Shape (fName)
 import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement))
+import MIMO.App (AppInfo(..))
+import MIMO.Base (version)
 import MIMO.Hint (Hint(HideColumn, Div, Area))
+import MIMO.Spec (Spec(..))
+import qualified Ports (optimum)
 
 data Trainer =
     Trainer
@@ -105,17 +110,6 @@ keyType typeName | typeName == ''ProgramView = Private
 keyType _ = NoKey
 -}
 
-hints :: [StackElement] -> [Hint]
-hints =
-    concatMap hints'
-    where
-      hints' (StackElement fld _ _) =
-          case fName fld of
-            -- Don't show the exercise text in the multi-view, put it in a
-            -- div in the single-view and use a textarea to input it.
-            Right n | n == 'exerciseText -> [HideColumn, Div, Area]
-            _ -> []
-
 instance SinkType UserId
 instance SinkType Integer
 instance SinkType Text
@@ -179,3 +173,53 @@ lensList = Control.Monad.sequence $
                             ) :: Lens (Program) (ProgramView) |]
                 })]
 -}
+
+theAppInfo :: AppInfo
+theAppInfo =
+  AppInfo  { _spec = theSpec
+           , _idField =
+               let f n | n == ''Trainer = Just (''UserId, 'trainerId)
+                   f n | n == ''Client = Just (''UserId, 'clientId)
+                   f n | n == ''Exercise = Just (''ExerciseId, 'exerciseId)
+                   f n | n == ''Program = Just (''ProgramId, 'programId)
+                   f n | n == ''Circuit = Just (''CircuitId, 'circuitId)
+                   f n | n == ''ProgramView = Just (''ProgramViewId, 'programViewId)
+                   f n | n == ''ViewNote = Nothing
+                   f _ = Nothing
+               in f
+           , _indexTypes =
+               let f n = []
+               in f
+           , _hints = theHints
+           }
+
+theSpec :: Spec
+theSpec =
+    Spec { siteName = "Optimum"
+         , siteVersion = version "1.2.3"
+         , siteHomepage = "homepage"
+         , siteAuthor = "author"
+         , siteLicense = PublicDomain
+         , siteSynopsis = "synopsis"
+         , siteDescription = "description"
+         , siteOwner = UserId 1
+         , siteDomain = "optimumhealth.com"
+         , siteTestHost = Nothing
+         , sitePorts = Ports.optimum
+         , siteAdmin = "logic@seereason.com"
+         , siteParent = "/srv"
+         , siteBackupsDir = "/srv/backups"
+         , siteBackupsUser = "upload"
+         , siteRowTypes = [''Trainer, ''Client, ''Exercise, ''Program, ''Circuit, ''ProgramView, ''ViewNote]
+         }
+
+theHints :: [StackElement] -> [Hint]
+theHints =
+    concatMap hints'
+    where
+      hints' (StackElement fld _ _) =
+          case fName fld of
+            -- Don't show the exercise text in the multi-view, put it in a
+            -- div in the single-view and use a textarea to input it.
+            Right n | n == 'exerciseText -> [HideColumn, Div, Area]
+            _ -> []

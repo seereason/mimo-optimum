@@ -11,14 +11,14 @@ instance SafeCopy Trainer
                                                safePut_Bool arg;
                                                safePut_SetUserId arg;
                                                return ()})
-          getCopy = contain (label "Types.Trainer:" (do {safeGet_UserId <- getSafeGet;
-                                                         safeGet_Text <- getSafeGet;
-                                                         safeGet_Bool <- getSafeGet;
-                                                         safeGet_SetUserId <- getSafeGet;
-                                                         (((return Trainer <*> safeGet_UserId) <*> safeGet_Text) <*> safeGet_Bool) <*> safeGet_SetUserId}))
+          getCopy = contain (label "Stage0.Trainer:" (do {safeGet_UserId <- getSafeGet;
+                                                          safeGet_Text <- getSafeGet;
+                                                          safeGet_Bool <- getSafeGet;
+                                                          safeGet_SetUserId <- getSafeGet;
+                                                          (((return Trainer <*> safeGet_UserId) <*> safeGet_Text) <*> safeGet_Bool) <*> safeGet_SetUserId}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.Trainer"
+          errorTypeName _ = "Stage0.Trainer"
 instance SafeCopy Client
     where putCopy (Client arg
                           arg
@@ -29,13 +29,13 @@ instance SafeCopy Client
                                               safePut_Text arg;
                                               safePut_Bool arg;
                                               return ()})
-          getCopy = contain (label "Types.Client:" (do {safeGet_UserId <- getSafeGet;
-                                                        safeGet_Text <- getSafeGet;
-                                                        safeGet_Bool <- getSafeGet;
-                                                        ((return Client <*> safeGet_UserId) <*> safeGet_Text) <*> safeGet_Bool}))
+          getCopy = contain (label "Stage0.Client:" (do {safeGet_UserId <- getSafeGet;
+                                                         safeGet_Text <- getSafeGet;
+                                                         safeGet_Bool <- getSafeGet;
+                                                         ((return Client <*> safeGet_UserId) <*> safeGet_Text) <*> safeGet_Bool}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.Client"
+          errorTypeName _ = "Stage0.Client"
 instance SafeCopy Exercise
     where putCopy (Exercise arg
                             arg
@@ -48,22 +48,22 @@ instance SafeCopy Exercise
                                                 safePut_Text arg;
                                                 safePut_Text arg;
                                                 return ()})
-          getCopy = contain (label "Types.Exercise:" (do {safeGet_ExerciseId <- getSafeGet;
-                                                          safeGet_UserId <- getSafeGet;
-                                                          safeGet_Text <- getSafeGet;
-                                                          (((return Exercise <*> safeGet_ExerciseId) <*> safeGet_UserId) <*> safeGet_Text) <*> safeGet_Text}))
+          getCopy = contain (label "Stage0.Exercise:" (do {safeGet_ExerciseId <- getSafeGet;
+                                                           safeGet_UserId <- getSafeGet;
+                                                           safeGet_Text <- getSafeGet;
+                                                           (((return Exercise <*> safeGet_ExerciseId) <*> safeGet_UserId) <*> safeGet_Text) <*> safeGet_Text}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.Exercise"
+          errorTypeName _ = "Stage0.Exercise"
 instance SafeCopy ExerciseId
     where putCopy (ExerciseId arg) = contain (do {safePut_Integer <- getSafePut;
                                                   safePut_Integer arg;
                                                   return ()})
-          getCopy = contain (label "Types.ExerciseId:" (do {safeGet_Integer <- getSafeGet;
-                                                            return ExerciseId <*> safeGet_Integer}))
+          getCopy = contain (label "Stage0.ExerciseId:" (do {safeGet_Integer <- getSafeGet;
+                                                             return ExerciseId <*> safeGet_Integer}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.ExerciseId"
+          errorTypeName _ = "Stage0.ExerciseId"
 instance SafeCopy Program
     where putCopy (Program arg
                            arg
@@ -83,25 +83,25 @@ instance SafeCopy Program
                                                safePut_UserId arg;
                                                safePut_SetUserId arg;
                                                return ()})
-          getCopy = contain (label "Types.Program:" (do {safeGet_ProgramId <- getSafeGet;
-                                                         safeGet_Text <- getSafeGet;
-                                                         safeGet_ListTuple2TextText <- getSafeGet;
-                                                         safeGet_ListCircuit <- getSafeGet;
-                                                         safeGet_UserId <- getSafeGet;
-                                                         safeGet_SetUserId <- getSafeGet;
-                                                         (((((return Program <*> safeGet_ProgramId) <*> safeGet_Text) <*> safeGet_ListTuple2TextText) <*> safeGet_ListCircuit) <*> safeGet_UserId) <*> safeGet_SetUserId}))
+          getCopy = contain (label "Stage0.Program:" (do {safeGet_ProgramId <- getSafeGet;
+                                                          safeGet_Text <- getSafeGet;
+                                                          safeGet_ListTuple2TextText <- getSafeGet;
+                                                          safeGet_ListCircuit <- getSafeGet;
+                                                          safeGet_UserId <- getSafeGet;
+                                                          safeGet_SetUserId <- getSafeGet;
+                                                          (((((return Program <*> safeGet_ProgramId) <*> safeGet_Text) <*> safeGet_ListTuple2TextText) <*> safeGet_ListCircuit) <*> safeGet_UserId) <*> safeGet_SetUserId}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.Program"
+          errorTypeName _ = "Stage0.Program"
 instance SafeCopy ProgramId
     where putCopy (ProgramId arg) = contain (do {safePut_Integer <- getSafePut;
                                                  safePut_Integer arg;
                                                  return ()})
-          getCopy = contain (label "Types.ProgramId:" (do {safeGet_Integer <- getSafeGet;
-                                                           return ProgramId <*> safeGet_Integer}))
+          getCopy = contain (label "Stage0.ProgramId:" (do {safeGet_Integer <- getSafeGet;
+                                                            return ProgramId <*> safeGet_Integer}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.ProgramId"
+          errorTypeName _ = "Stage0.ProgramId"
 instance SafeCopy Circuit
     where putCopy (Circuit arg
                            arg
@@ -128,24 +128,24 @@ instance SafeCopy Circuit
                                                safePut_Text arg;
                                                safePut_Text arg;
                                                return ()})
-          getCopy = contain (label "Types.Circuit:" (do {safeGet_CircuitId <- getSafeGet;
-                                                         safeGet_MaybeExerciseId <- getSafeGet;
-                                                         safeGet_MaybeChar <- getSafeGet;
-                                                         safeGet_MaybeInteger <- getSafeGet;
-                                                         safeGet_Text <- getSafeGet;
-                                                         (((((((((return Circuit <*> safeGet_CircuitId) <*> safeGet_MaybeExerciseId) <*> safeGet_MaybeChar) <*> safeGet_MaybeInteger) <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_Text}))
+          getCopy = contain (label "Stage0.Circuit:" (do {safeGet_CircuitId <- getSafeGet;
+                                                          safeGet_MaybeExerciseId <- getSafeGet;
+                                                          safeGet_MaybeChar <- getSafeGet;
+                                                          safeGet_MaybeInteger <- getSafeGet;
+                                                          safeGet_Text <- getSafeGet;
+                                                          (((((((((return Circuit <*> safeGet_CircuitId) <*> safeGet_MaybeExerciseId) <*> safeGet_MaybeChar) <*> safeGet_MaybeInteger) <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_Text) <*> safeGet_Text}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.Circuit"
+          errorTypeName _ = "Stage0.Circuit"
 instance SafeCopy CircuitId
     where putCopy (CircuitId arg) = contain (do {safePut_Integer <- getSafePut;
                                                  safePut_Integer arg;
                                                  return ()})
-          getCopy = contain (label "Types.CircuitId:" (do {safeGet_Integer <- getSafeGet;
-                                                           return CircuitId <*> safeGet_Integer}))
+          getCopy = contain (label "Stage0.CircuitId:" (do {safeGet_Integer <- getSafeGet;
+                                                            return CircuitId <*> safeGet_Integer}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.CircuitId"
+          errorTypeName _ = "Stage0.CircuitId"
 instance SafeCopy ProgramView
     where putCopy (ProgramView arg
                                arg
@@ -156,22 +156,22 @@ instance SafeCopy ProgramView
                                                    safePut_ProgramId arg;
                                                    safePut_ListViewNote arg;
                                                    return ()})
-          getCopy = contain (label "Types.ProgramView:" (do {safeGet_ProgramViewId <- getSafeGet;
-                                                             safeGet_ProgramId <- getSafeGet;
-                                                             safeGet_ListViewNote <- getSafeGet;
-                                                             ((return ProgramView <*> safeGet_ProgramViewId) <*> safeGet_ProgramId) <*> safeGet_ListViewNote}))
+          getCopy = contain (label "Stage0.ProgramView:" (do {safeGet_ProgramViewId <- getSafeGet;
+                                                              safeGet_ProgramId <- getSafeGet;
+                                                              safeGet_ListViewNote <- getSafeGet;
+                                                              ((return ProgramView <*> safeGet_ProgramViewId) <*> safeGet_ProgramId) <*> safeGet_ListViewNote}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.ProgramView"
+          errorTypeName _ = "Stage0.ProgramView"
 instance SafeCopy ProgramViewId
     where putCopy (ProgramViewId arg) = contain (do {safePut_Integer <- getSafePut;
                                                      safePut_Integer arg;
                                                      return ()})
-          getCopy = contain (label "Types.ProgramViewId:" (do {safeGet_Integer <- getSafeGet;
-                                                               return ProgramViewId <*> safeGet_Integer}))
+          getCopy = contain (label "Stage0.ProgramViewId:" (do {safeGet_Integer <- getSafeGet;
+                                                                return ProgramViewId <*> safeGet_Integer}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.ProgramViewId"
+          errorTypeName _ = "Stage0.ProgramViewId"
 instance SafeCopy ViewNote
     where putCopy (ViewNote arg
                             arg
@@ -182,13 +182,13 @@ instance SafeCopy ViewNote
                                                 safePut_MaybeInteger arg;
                                                 safePut_ExerciseId arg;
                                                 return ()})
-          getCopy = contain (label "Types.ViewNote:" (do {safeGet_MaybeChar <- getSafeGet;
-                                                          safeGet_MaybeInteger <- getSafeGet;
-                                                          safeGet_ExerciseId <- getSafeGet;
-                                                          ((return ViewNote <*> safeGet_MaybeChar) <*> safeGet_MaybeInteger) <*> safeGet_ExerciseId}))
+          getCopy = contain (label "Stage0.ViewNote:" (do {safeGet_MaybeChar <- getSafeGet;
+                                                           safeGet_MaybeInteger <- getSafeGet;
+                                                           safeGet_ExerciseId <- getSafeGet;
+                                                           ((return ViewNote <*> safeGet_MaybeChar) <*> safeGet_MaybeInteger) <*> safeGet_ExerciseId}))
           version = 0
           kind = base
-          errorTypeName _ = "Types.ViewNote"
+          errorTypeName _ = "Stage0.ViewNote"
 instance Default Circuit
     where def = Circuit def def def def def def def def def def
 instance Default CircuitId
