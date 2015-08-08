@@ -1,10 +1,10 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-module Stage2 where
+module Stage2Def where
 
-import Stage0
-import App.Stage1 (App)
+import Stage1Def
+import Stage1Gen (App)
 import MIMO.Updatable (Updatable(appForm))
 
 instance Updatable App ProgramId where

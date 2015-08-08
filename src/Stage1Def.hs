@@ -3,7 +3,7 @@
 {-# LANGUAGE DeriveDataTypeable, FlexibleContexts, GeneralizedNewtypeDeriving, MultiParamTypeClasses,
              RecordWildCards, TemplateHaskell, TypeFamilies, UndecidableInstances #-}
 {-# OPTIONS_GHC -Wall #-}
-module Stage0 where
+module Stage1Def where
 
 import Data.Data (Data, Typeable)
 import Data.Default (Default(def))
