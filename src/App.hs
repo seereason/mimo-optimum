@@ -28,5 +28,4 @@ theAppInfo =
                let f n = []
                in f
            , _hints = hints
-           , _typeNames = [''Trainer, ''Client, ''Exercise, ''Program, ''Circuit, ''ProgramView, ''ViewNote]
            }

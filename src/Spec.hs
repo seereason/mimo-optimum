@@ -10,6 +10,7 @@ import Happstack.Authenticate.Core (UserId(UserId))
 import MIMO.Base (version)
 import MIMO.Spec (Spec(..))
 import qualified Ports (optimum)
+import Types
 
 spec :: Spec
 spec = Spec { siteName = "Optimum"
@@ -27,4 +28,5 @@ spec = Spec { siteName = "Optimum"
             , siteParent = "/srv"
             , siteBackupsDir = "/srv/backups"
             , siteBackupsUser = "upload"
+            , siteRowTypes = [''Trainer, ''Client, ''Exercise, ''Program, ''Circuit, ''ProgramView, ''ViewNote]
             }
