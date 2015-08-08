@@ -4,7 +4,7 @@
 module Updatable where
 
 import App
-import App.Types (App)
+import App.Stage1 (App)
 import MIMO.Updatable (Updatable(appForm))
 
 instance Updatable App ProgramId where
