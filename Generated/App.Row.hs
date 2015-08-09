@@ -74,10 +74,10 @@ instance Row Trainer
                                              mkDiv x = map (\f -> f x) [] :: [GenChildList App']}
           updateForm v = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                         then Nothing
-                                                        else Just v') <$> appForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Trainer)
+                                                        else Just v') <$> updForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Trainer)
           createForm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                       then Nothing
-                                                      else Just v') <$> appForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Trainer)
+                                                      else Just v') <$> updForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Trainer)
 instance Row Client
     where type AppType Client = App
           type IdType Client = UserId
@@ -152,10 +152,10 @@ instance Row Client
                                              mkDiv x = map (\f -> f x) [] :: [GenChildList App']}
           updateForm v = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                         then Nothing
-                                                        else Just v') <$> appForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Client)
+                                                        else Just v') <$> updForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Client)
           createForm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                       then Nothing
-                                                      else Just v') <$> appForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Client)
+                                                      else Just v') <$> updForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Client)
 instance Row Exercise
     where type AppType Exercise = App
           type IdType Exercise = ExerciseId
@@ -231,10 +231,10 @@ instance Row Exercise
                                              mkDiv x = map (\f -> f x) [\x -> asChild (doTextFormat (getTextFormat x) (appPack (unpack ((\x -> view lensExerciseText x :: Text) x))))] :: [GenChildList App']}
           updateForm v = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                         then Nothing
-                                                        else Just v') <$> appForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Exercise)
+                                                        else Just v') <$> updForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Exercise)
           createForm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                       then Nothing
-                                                      else Just v') <$> appForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Exercise)
+                                                      else Just v') <$> updForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Exercise)
 instance Row Program
     where type AppType Program = App
           type IdType Program = ProgramId
@@ -316,10 +316,10 @@ instance Row Program
                                              mkDiv x = map (\f -> f x) [] :: [GenChildList App']}
           updateForm v = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                         then Nothing
-                                                        else Just v') <$> appForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Program)
+                                                        else Just v') <$> updForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Program)
           createForm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                       then Nothing
-                                                      else Just v') <$> appForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Program)
+                                                      else Just v') <$> updForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Program)
 instance Row Circuit
     where type AppType Circuit = App
           type IdType Circuit = CircuitId
@@ -408,10 +408,10 @@ instance Row Circuit
                                              mkDiv x = map (\f -> f x) [] :: [GenChildList App']}
           updateForm v = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                         then Nothing
-                                                        else Just v') <$> appForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Circuit)
+                                                        else Just v') <$> updForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Circuit)
           createForm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                       then Nothing
-                                                      else Just v') <$> appForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Circuit)
+                                                      else Just v') <$> updForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe Circuit)
 instance Row ProgramView
     where type AppType ProgramView = App
           type IdType ProgramView = ProgramViewId
@@ -487,7 +487,7 @@ instance Row ProgramView
                                              mkDiv x = map (\f -> f x) [] :: [GenChildList App']}
           updateForm v = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                         then Nothing
-                                                        else Just v') <$> appForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe ProgramView)
+                                                        else Just v') <$> updForm (Just v)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "update") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe ProgramView)
           createForm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                       then Nothing
-                                                      else Just v') <$> appForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe ProgramView)
+                                                      else Just v') <$> updForm (Just def)) <*> (((\u c -> fromMaybe (fromMaybe (error "No button pushed!") u) c) <$> inputSubmit "create") <*> inputSubmit "cancel")))) `transformEitherM` maybe (return $ (Right $ Nothing)) (return . (Right . Just)) :: AppForm (Maybe ProgramView)
