@@ -36,7 +36,8 @@ Executable optimum-server
       safecopy,
       syb,
       th-orphans,
-      unix
+      unix,
+      web-routes
   else
     Hs-Source-Dirs: /usr/share/mimo/Common
     Main-Is: /usr/share/mimo/Exec/Server.hs
