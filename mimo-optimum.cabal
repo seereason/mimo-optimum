@@ -18,6 +18,29 @@ flag local-mimo
 Executable optimum-server
   Default-Language: Haskell2010
   Hs-Source-Dirs: src
+  GHC-Options: -O2 -threaded -Wall
+  Build-Depends:
+      base < 5,
+      Cabal,
+      containers,
+      data-default,
+      happstack-authenticate,
+      happstack-foundation,
+      hslogger,
+      hsp,
+      lens,
+      mtl,
+      mtl-unleashed,
+      process,
+      seereason-ports,
+      template-haskell,
+      text,
+      th-context,
+      th-desugar,
+      th-path,
+      th-typegraph,
+      time,
+      time-locale-compat
   if flag(local-mimo)
     Hs-Source-Dirs: ../mimo, ../mimo/Common
     Main-Is: ../mimo/Exec/Server.hs
@@ -42,29 +65,6 @@ Executable optimum-server
     Hs-Source-Dirs: /usr/share/mimo/Common
     Main-Is: /usr/share/mimo/Exec/Server.hs
     Build-Depends: mimo
-  GHC-Options: -O2 -threaded -Wall
-  Build-Depends:
-      base < 5,
-      Cabal,
-      containers,
-      data-default,
-      happstack-authenticate,
-      happstack-foundation,
-      hslogger,
-      hsp,
-      lens,
-      mtl,
-      mtl-unleashed,
-      process,
-      seereason-ports,
-      template-haskell,
-      text,
-      th-context,
-      th-desugar,
-      th-path,
-      th-typegraph,
-      time,
-      time-locale-compat
 
 Executable optimum-backups
   Default-Language: Haskell2010
