@@ -5,7 +5,7 @@ instance Row Trainer
           type AppFormType Trainer = AppForm
           type IdType Trainer = UserId
           createForm _ = do {here <- whereami;
-                             frm <- updForm' Nothing;
+                             frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetTrainerByIdEvent");
                              reform (form here) "add" (maybe (seeOtherURL (AppURL SomeTrainers)) (\x -> do {xid <- update (CreateTrainerEvent x);
                                                                                                             seeOtherURL (AppURL (ViewTrainer xid))})) Nothing (createForm' frm :: AppFormType Trainer
@@ -19,7 +19,7 @@ instance Row Trainer
                                                                                                                                                                                            (Maybe ([Trainer])))}
           updateForm x = do {here <- whereami;
                              liftIO $ logM "Update" DEBUG ("EVENT " ++ ("GetTrainerByIdEvent" ++ (" " ++ show x)));
-                             frm <- updForm' (Just x);
+                             frm <- updForm (Just x);
                              reform (form here) "update" (maybe (seeOtherURL (AppURL SomeTrainers)) (\x' -> do {xid' <- update (UpdateTrainerEvent x');
                                                                                                                 seeOtherURL (AppURL (ViewTrainer xid'))})) Nothing (updateForm' frm :: AppFormType Trainer
                                                                                                                                                                                                    (Maybe Trainer))}
@@ -91,7 +91,7 @@ instance Row Client
           type AppFormType Client = AppForm
           type IdType Client = UserId
           createForm _ = do {here <- whereami;
-                             frm <- updForm' Nothing;
+                             frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetClientByIdEvent");
                              reform (form here) "add" (maybe (seeOtherURL (AppURL SomeClients)) (\x -> do {xid <- update (CreateClientEvent x);
                                                                                                            seeOtherURL (AppURL (ViewClient xid))})) Nothing (createForm' frm :: AppFormType Client
@@ -105,7 +105,7 @@ instance Row Client
                                                                                                                                                                                          (Maybe ([Client])))}
           updateForm x = do {here <- whereami;
                              liftIO $ logM "Update" DEBUG ("EVENT " ++ ("GetClientByIdEvent" ++ (" " ++ show x)));
-                             frm <- updForm' (Just x);
+                             frm <- updForm (Just x);
                              reform (form here) "update" (maybe (seeOtherURL (AppURL SomeClients)) (\x' -> do {xid' <- update (UpdateClientEvent x');
                                                                                                                seeOtherURL (AppURL (ViewClient xid'))})) Nothing (updateForm' frm :: AppFormType Client
                                                                                                                                                                                                  (Maybe Client))}
@@ -175,7 +175,7 @@ instance Row Exercise
           type AppFormType Exercise = AppForm
           type IdType Exercise = ExerciseId
           createForm _ = do {here <- whereami;
-                             frm <- updForm' Nothing;
+                             frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetExerciseByIdEvent");
                              reform (form here) "add" (maybe (seeOtherURL (AppURL SomeExercises)) (\x -> do {xid <- update (CreateExerciseEvent x);
                                                                                                              seeOtherURL (AppURL (ViewExercise xid))})) Nothing (createForm' frm :: AppFormType Exercise
@@ -189,7 +189,7 @@ instance Row Exercise
                                                                                                                                                                                              (Maybe ([Exercise])))}
           updateForm x = do {here <- whereami;
                              liftIO $ logM "Update" DEBUG ("EVENT " ++ ("GetExerciseByIdEvent" ++ (" " ++ show x)));
-                             frm <- updForm' (Just x);
+                             frm <- updForm (Just x);
                              reform (form here) "update" (maybe (seeOtherURL (AppURL SomeExercises)) (\x' -> do {xid' <- update (UpdateExerciseEvent x');
                                                                                                                  seeOtherURL (AppURL (ViewExercise xid'))})) Nothing (updateForm' frm :: AppFormType Exercise
                                                                                                                                                                                                      (Maybe Exercise))}
@@ -259,7 +259,7 @@ instance Row Program
           type AppFormType Program = AppForm
           type IdType Program = ProgramId
           createForm _ = do {here <- whereami;
-                             frm <- updForm' Nothing;
+                             frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetProgramByIdEvent");
                              reform (form here) "add" (maybe (seeOtherURL (AppURL SomePrograms)) (\x -> do {xid <- update (CreateProgramEvent x);
                                                                                                             seeOtherURL (AppURL (ViewProgram xid))})) Nothing (createForm' frm :: AppFormType Program
@@ -273,7 +273,7 @@ instance Row Program
                                                                                                                                                                                            (Maybe ([Program])))}
           updateForm x = do {here <- whereami;
                              liftIO $ logM "Update" DEBUG ("EVENT " ++ ("GetProgramByIdEvent" ++ (" " ++ show x)));
-                             frm <- updForm' (Just x);
+                             frm <- updForm (Just x);
                              reform (form here) "update" (maybe (seeOtherURL (AppURL SomePrograms)) (\x' -> do {xid' <- update (UpdateProgramEvent x');
                                                                                                                 seeOtherURL (AppURL (ViewProgram xid'))})) Nothing (updateForm' frm :: AppFormType Program
                                                                                                                                                                                                    (Maybe Program))}
@@ -350,7 +350,7 @@ instance Row Circuit
           type AppFormType Circuit = AppForm
           type IdType Circuit = CircuitId
           createForm _ = do {here <- whereami;
-                             frm <- updForm' Nothing;
+                             frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetCircuitByIdEvent");
                              reform (form here) "add" (maybe (seeOtherURL (AppURL SomeCircuits)) (\x -> do {xid <- update (CreateCircuitEvent x);
                                                                                                             seeOtherURL (AppURL (ViewCircuit xid))})) Nothing (createForm' frm :: AppFormType Circuit
@@ -364,7 +364,7 @@ instance Row Circuit
                                                                                                                                                                                            (Maybe ([Circuit])))}
           updateForm x = do {here <- whereami;
                              liftIO $ logM "Update" DEBUG ("EVENT " ++ ("GetCircuitByIdEvent" ++ (" " ++ show x)));
-                             frm <- updForm' (Just x);
+                             frm <- updForm (Just x);
                              reform (form here) "update" (maybe (seeOtherURL (AppURL SomeCircuits)) (\x' -> do {xid' <- update (UpdateCircuitEvent x');
                                                                                                                 seeOtherURL (AppURL (ViewCircuit xid'))})) Nothing (updateForm' frm :: AppFormType Circuit
                                                                                                                                                                                                    (Maybe Circuit))}
@@ -448,7 +448,7 @@ instance Row ProgramView
           type AppFormType ProgramView = AppForm
           type IdType ProgramView = ProgramViewId
           createForm _ = do {here <- whereami;
-                             frm <- updForm' Nothing;
+                             frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetProgramViewByIdEvent");
                              reform (form here) "add" (maybe (seeOtherURL (AppURL SomeProgramViews)) (\x -> do {xid <- update (CreateProgramViewEvent x);
                                                                                                                 seeOtherURL (AppURL (ViewProgramView xid))})) Nothing (createForm' frm :: AppFormType ProgramView
@@ -462,7 +462,7 @@ instance Row ProgramView
                                                                                                                                                                                                    (Maybe ([ProgramView])))}
           updateForm x = do {here <- whereami;
                              liftIO $ logM "Update" DEBUG ("EVENT " ++ ("GetProgramViewByIdEvent" ++ (" " ++ show x)));
-                             frm <- updForm' (Just x);
+                             frm <- updForm (Just x);
                              reform (form here) "update" (maybe (seeOtherURL (AppURL SomeProgramViews)) (\x' -> do {xid' <- update (UpdateProgramViewEvent x');
                                                                                                                     seeOtherURL (AppURL (ViewProgramView xid'))})) Nothing (updateForm' frm :: AppFormType ProgramView
                                                                                                                                                                                                            (Maybe ProgramView))}
