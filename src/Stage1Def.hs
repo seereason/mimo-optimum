@@ -18,6 +18,7 @@ import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement))
 import MIMO.App (AppInfo(..))
 import MIMO.Base (version)
 import MIMO.Hint (Hint(HideColumn, Div, Area))
+import MIMO.Id (IdField(..))
 import MIMO.Spec (Spec(..))
 import qualified Ports (optimum)
 
@@ -104,21 +105,24 @@ instance SinkType Text
 theAppInfo :: AppInfo
 theAppInfo =
   AppInfo  { _spec = theSpec
-           , _idField =
-               let f n | n == ''Trainer = Just (''UserId, 'trainerId)
-                   f n | n == ''Client = Just (''UserId, 'clientId)
-                   f n | n == ''Exercise = Just (''ExerciseId, 'exerciseId)
-                   f n | n == ''Program = Just (''ProgramId, 'programId)
-                   f n | n == ''Circuit = Just (''CircuitId, 'circuitId)
-                   f n | n == ''ProgramView = Just (''ProgramViewId, 'programViewId)
-                   f n | n == ''ViewNote = Nothing
-                   f _ = Nothing
-               in f
            , _indexTypes =
                let f n = []
                in f
            , _hints = theHints
            }
+
+instance IdField Trainer UserId where
+    idField _ = [|trainerId|]
+instance IdField Client UserId where
+    idField _ = [|clientId|]
+instance IdField Exercise ExerciseId where
+    idField _ = [|exerciseId|]
+instance IdField Program ProgramId where
+    idField _ = [|programId|]
+instance IdField Circuit CircuitId where
+    idField _ = [|circuitId|]
+instance IdField ProgramView ProgramViewId where
+    idField _ = [|programViewId|]
 
 theSpec :: Spec
 theSpec =
