@@ -14,7 +14,7 @@ import Happstack.Authenticate.Core (UserId(..))
 import Happstack.Foundation ({-(<$>), Data, Typeable,-} PathInfo)
 import Language.Haskell.TH.Path.Graph (SinkType)
 import Language.Haskell.TH.TypeGraph.Shape (fName)
-import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement))
+import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement), TypeStack(_typeStack))
 import MIMO.App (AppInfo(..))
 import MIMO.Base (version)
 import MIMO.Hint (Hint(HideColumn, Div, Area))
@@ -144,9 +144,9 @@ theSpec =
          , siteRowTypes = [''Trainer, ''Client, ''Exercise, ''Program, ''Circuit, ''ProgramView, ''ViewNote]
          }
 
-theHints :: [StackElement] -> [Hint]
+theHints :: TypeStack -> [Hint]
 theHints =
-    concatMap hints'
+    concatMap hints' . _typeStack
     where
       hints' (StackElement fld _ _) =
           case fName fld of
