@@ -18,9 +18,14 @@ import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement), TypeStac
 import MIMO.App (AppInfo(..))
 import MIMO.Base (version)
 import MIMO.Hint (Hint(HideColumn, Div, Area))
-import MIMO.Id (IdField(..))
+import MIMO.Id (IdField(idField), makeIdType', makeIdInstances')
 import MIMO.Spec (Spec(..))
 import qualified Ports (optimum)
+
+$(makeIdType' "Exercise")
+$(makeIdType' "Program")
+$(makeIdType' "Circuit")
+$(makeIdType' "ProgramView")
 
 data Trainer =
     Trainer
@@ -37,9 +42,6 @@ data Client =
     , clientActive :: Bool
     } deriving (Eq, Ord, Show, Data, Typeable)
 
-newtype ExerciseId = ExerciseId {unExerciseId :: Integer} deriving (Enum, Eq, Ord, Show, Data, Typeable, PathInfo)
-instance SinkType ExerciseId
-
 data Exercise =
     Exercise
     { exerciseId :: ExerciseId
@@ -47,9 +49,6 @@ data Exercise =
     , exerciseTitle :: Text
     , exerciseText :: Text
     } deriving (Eq, Ord, Show, Data, Typeable)
-
-newtype ProgramId = ProgramId {unProgramId :: Integer} deriving (Enum, Eq, Ord, Show, Data, Typeable, PathInfo)
-instance SinkType ProgramId
 
 data Program =
     Program
@@ -60,9 +59,6 @@ data Program =
     , programAuthor :: UserId
     , programClients :: Set UserId
     } deriving (Eq, Ord, Show, Data, Typeable)
-
-newtype CircuitId = CircuitId {unCircuitId :: Integer} deriving (Enum, Eq, Ord, Show, Data, Typeable, PathInfo)
-instance SinkType CircuitId
 
 data Circuit =
     Circuit
@@ -77,9 +73,6 @@ data Circuit =
     , circuitSets :: Text
     , circuitTotal :: Text
     } deriving (Eq, Ord, Show, Data, Typeable)
-
-newtype ProgramViewId = ProgramViewId {unProgramViewId :: Integer} deriving (Enum, Eq, Ord, Show, Data, Typeable, PathInfo)
-instance SinkType ProgramViewId
 
 instance Default Char where
     def = 'A'
@@ -98,6 +91,11 @@ data ViewNote =
     , noteText :: ExerciseId
     } deriving (Eq, Ord, Show, Data, Typeable)
 
+$(makeIdInstances' ''Exercise)
+$(makeIdInstances' ''Program)
+$(makeIdInstances' ''Circuit)
+$(makeIdInstances' ''ProgramView)
+
 instance SinkType UserId
 instance SinkType Integer
 instance SinkType Text
@@ -112,17 +110,9 @@ theAppInfo =
            }
 
 instance IdField Trainer UserId where
-    idField _ = [|trainerId|]
+    idField = trainerId
 instance IdField Client UserId where
-    idField _ = [|clientId|]
-instance IdField Exercise ExerciseId where
-    idField _ = [|exerciseId|]
-instance IdField Program ProgramId where
-    idField _ = [|programId|]
-instance IdField Circuit CircuitId where
-    idField _ = [|circuitId|]
-instance IdField ProgramView ProgramViewId where
-    idField _ = [|programViewId|]
+    idField = clientId
 
 theSpec :: Spec
 theSpec =
