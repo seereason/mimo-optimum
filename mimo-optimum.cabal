@@ -44,12 +44,10 @@ Executable optimum-server
       seereason-ports,
       template-haskell,
       text,
-      th-context,
       th-desugar,
-      th-path,
-      th-typegraph,
       time,
-      time-locale-compat
+      time-locale-compat,
+      userid
   if flag(local-mimo)
     Hs-Source-Dirs: ../mimo, ../mimo/Common
     Main-Is: ../mimo/Exec/Server.hs
@@ -105,11 +103,8 @@ Executable optimum-backups
     syb,
     template-haskell,
     text,
-    th-context,
     th-desugar,
     th-orphans,
-    th-path,
-    th-typegraph,
     time,
     time-locale-compat
   if flag(local-mimo)

@@ -9,8 +9,8 @@ import Data.Data (Data, Typeable)
 import Data.Default (Default(def))
 import Data.Set
 import Data.Text (Text)
+import Data.UserId (UserId(..))
 import Distribution.License (License(..))
-import Happstack.Authenticate.Core (UserId(..))
 import Happstack.Foundation ({-(<$>), Data, Typeable,-} PathInfo)
 import Language.Haskell.TH.Path.Graph (SinkType)
 import Language.Haskell.TH.TypeGraph.Shape (fName)
@@ -18,18 +18,20 @@ import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement), TypeStac
 import MIMO.App (AppInfo(..))
 import MIMO.Base (version)
 import MIMO.Hint (Hint(HideColumn, Div, Area))
-import MIMO.Id (IdField(idField), makeIdType', makeIdInstances')
+import MIMO.Id (IdField(idField), KeyType(Private, Owner), makeIdType', makeIdInstances)
 import MIMO.Spec (Spec(..))
 import qualified Ports (optimum)
 
-$(makeIdType' "Exercise")
-$(makeIdType' "Program")
-$(makeIdType' "Circuit")
-$(makeIdType' "ProgramView")
+$(makeIdType' Owner "Trainer")
+$(makeIdType' Owner "Client")
+$(makeIdType' Private "Exercise")
+$(makeIdType' Private "Program")
+$(makeIdType' Private "Circuit")
+$(makeIdType' Private "ProgramView")
 
 data Trainer =
     Trainer
-    { trainerId :: UserId
+    { trainerId :: TrainerId
     , trainerName :: Text
     , trainerActive :: Bool
     , trainerClients :: Set UserId
@@ -37,7 +39,7 @@ data Trainer =
 
 data Client =
     Client
-    { clientId :: UserId
+    { clientId :: ClientId
     , clientName :: Text
     , clientActive :: Bool
     } deriving (Eq, Ord, Show, Data, Typeable)
@@ -45,7 +47,7 @@ data Client =
 data Exercise =
     Exercise
     { exerciseId :: ExerciseId
-    , exerciseAuthor :: UserId
+    , exerciseAuthor :: TrainerId
     , exerciseTitle :: Text
     , exerciseText :: Text
     } deriving (Eq, Ord, Show, Data, Typeable)
@@ -56,7 +58,7 @@ data Program =
     , programTitle :: Text
     , programNotes :: [(Text, Text)]
     , programCircuits :: [Circuit]
-    , programAuthor :: UserId
+    , programAuthor :: TrainerId
     , programClients :: Set UserId
     } deriving (Eq, Ord, Show, Data, Typeable)
 
@@ -91,10 +93,12 @@ data ViewNote =
     , noteText :: ExerciseId
     } deriving (Eq, Ord, Show, Data, Typeable)
 
-$(makeIdInstances' ''Exercise)
-$(makeIdInstances' ''Program)
-$(makeIdInstances' ''Circuit)
-$(makeIdInstances' ''ProgramView)
+$(makeIdInstances ''Client 'clientId ''ClientId)
+$(makeIdInstances ''Trainer 'trainerId ''TrainerId)
+$(makeIdInstances ''Exercise 'exerciseId ''ExerciseId)
+$(makeIdInstances ''Program 'programId ''ProgramId)
+$(makeIdInstances ''Circuit 'circuitId ''CircuitId)
+$(makeIdInstances ''ProgramView 'programViewId ''ProgramViewId)
 
 instance SinkType UserId
 instance SinkType Integer
@@ -108,11 +112,6 @@ theAppInfo =
                in f
            , _hints = theHints
            }
-
-instance IdField Trainer UserId where
-    idField = trainerId
-instance IdField Client UserId where
-    idField = clientId
 
 theSpec :: Spec
 theSpec =
