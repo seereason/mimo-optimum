@@ -46,7 +46,8 @@ instance ListForm App' Client
           headers _ = [asChild (elt "th" <: fromStringLit "Client Id") :: GenChildList App',
                        asChild (elt "th" <: fromStringLit "Client Name") :: GenChildList App',
                        asChild (elt "th" <: fromStringLit "Client Active") :: GenChildList App']
-          columns = \p -> [asChild (elt "td" <: asChild ((\x -> view lensClientId x :: UserId) p)),
+          columns = \p -> [asChild (elt "td" <: ((elt "a" <@ ("href" := AppURL (ViewClient ((\x -> view lensClientId x :: ClientId) p)) :: Attr AppText
+                                                                                                                                                (URL AppURL))) <: asChild ((\x -> view lensClientId x :: ClientId) p))),
                            asChild (elt "td" <: asChild ((\x -> view lensClientName x :: Text) p)),
                            asChild (elt "td" <: asChild ((\x -> view lensClientActive x :: Bool) p))]
 instance ListForm App' Exercise
@@ -66,7 +67,8 @@ instance ListForm App' Exercise
                        asChild (elt "th" <: fromStringLit "Exercise Title") :: GenChildList App']
           columns = \p -> [asChild (elt "td" <: ((elt "a" <@ ("href" := AppURL (ViewExercise ((\x -> view lensExerciseId x :: ExerciseId) p)) :: Attr AppText
                                                                                                                                                       (URL AppURL))) <: asChild ((\x -> view lensExerciseId x :: ExerciseId) p))),
-                           asChild (elt "td" <: asChild ((\x -> view lensExerciseAuthor x :: UserId) p)),
+                           asChild (elt "td" <: ((elt "a" <@ ("href" := AppURL (ViewTrainer ((\x -> view lensExerciseAuthor x :: TrainerId) p)) :: Attr AppText
+                                                                                                                                                        (URL AppURL))) <: asChild ((\x -> view lensExerciseAuthor x :: TrainerId) p))),
                            asChild (elt "td" <: asChild ((\x -> view lensExerciseTitle x :: Text) p))]
 instance ListForm App' Program
     where listForm' xs = (fieldset $ (((\xs' t -> if t == pack "cancel"
@@ -92,7 +94,8 @@ instance ListForm App' Program
                            asChild (elt "td" <: asChild ((\x -> view lensProgramNotes x :: [(Text,
                                                                                              Text)]) p)),
                            asChild (elt "td" <: asChild ((\x -> view lensProgramCircuits x :: [Circuit]) p)),
-                           asChild (elt "td" <: asChild ((\x -> view lensProgramAuthor x :: UserId) p)),
+                           asChild (elt "td" <: ((elt "a" <@ ("href" := AppURL (ViewTrainer ((\x -> view lensProgramAuthor x :: TrainerId) p)) :: Attr AppText
+                                                                                                                                                       (URL AppURL))) <: asChild ((\x -> view lensProgramAuthor x :: TrainerId) p))),
                            asChild (elt "td" <: asChild ((\x -> view lensProgramClients x :: Set UserId) p))]
 instance ListForm App' ProgramView
     where listForm' xs = (fieldset $ (((\xs' t -> if t == pack "cancel"
@@ -130,7 +133,8 @@ instance ListForm App' Trainer
                        asChild (elt "th" <: fromStringLit "Trainer Name") :: GenChildList App',
                        asChild (elt "th" <: fromStringLit "Trainer Active") :: GenChildList App',
                        asChild (elt "th" <: fromStringLit "Trainer Clients") :: GenChildList App']
-          columns = \p -> [asChild (elt "td" <: asChild ((\x -> view lensTrainerId x :: UserId) p)),
+          columns = \p -> [asChild (elt "td" <: ((elt "a" <@ ("href" := AppURL (ViewTrainer ((\x -> view lensTrainerId x :: TrainerId) p)) :: Attr AppText
+                                                                                                                                                   (URL AppURL))) <: asChild ((\x -> view lensTrainerId x :: TrainerId) p))),
                            asChild (elt "td" <: asChild ((\x -> view lensTrainerName x :: Text) p)),
                            asChild (elt "td" <: asChild ((\x -> view lensTrainerActive x :: Bool) p)),
                            asChild (elt "td" <: asChild ((\x -> view lensTrainerClients x :: Set UserId) p))]

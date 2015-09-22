@@ -3,7 +3,7 @@ instance Row Trainer
           type AppType' Trainer = App'
           type AppURLType Trainer = URL AppURL
           type AppFormType Trainer = AppForm
-          type IdType Trainer = UserId
+          type IdType Trainer = TrainerId
           createForm _ = do {here <- whereami;
                              frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetTrainerByIdEvent");
@@ -60,20 +60,20 @@ instance Row Trainer
                                    Nothing -> do {notFound ();
                                                   appTemplate ("Trainer" <> " not found.") () $ ((((elt "p" <: menuList) <: fromStringLit "Trainer ") <: asChild xid) <: fromStringLit " could not be found.")}
                                    Just x -> do {ok ();
-                                                 appTemplate (appPack $ ("Trainer" <> (" " <> (show $ (id $ (trainerId $ x)))))) () $ (((((elt "div" <@ ("class" := "row" :: Attr AppText
-                                                                                                                                                                                  AppText)) <: menuList) <: ((elt "dl" <@ ("class" := "row-header" :: Attr AppText
-                                                                                                                                                                                                                                                           AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
-                                                                                                                                                                                                                                                                                                                                        AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdateTrainer xid) :: Attr AppText
-                                                                                                                                                                                                                                                                                                                                                                                                                                           (AppURLType Trainer))) <: fromStringLit ("update this " ++ "Trainer"))))}
-                                       where mkDescList x = map (\f -> f x) [\_ -> asChild (elt "dt" <: fromStringLit "Trainer Id:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensTrainerId x :: UserId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Trainer Name:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensTrainerName x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Trainer Active:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensTrainerActive x :: Bool) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Trainer Clients:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensTrainerClients x :: Set UserId) x))] :: [GenChildList (AppType' Trainer)]
-                                             mkDiv x = map (\f -> f x) [] :: [GenChildList (AppType' Trainer)]}
+                                                 appTemplate (appPack $ ("Trainer" <> (" " <> (show $ (unTrainerId $ (trainerId $ x)))))) () $ (((((elt "div" <@ ("class" := "row" :: Attr AppText
+                                                                                                                                                                                           AppText)) <: menuList) <: ((elt "dl" <@ ("class" := "row-header" :: Attr AppText
+                                                                                                                                                                                                                                                                    AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
+                                                                                                                                                                                                                                                                                                                                                 AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdateTrainer xid) :: Attr AppText
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    (AppURLType Trainer))) <: fromStringLit ("update this " ++ "Trainer"))))}
+                                       where mkDescList x' = map (\f -> f x') [\_ -> asChild (elt "dt" <: fromStringLit "Trainer Id:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensTrainerId x :: TrainerId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Trainer Name:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensTrainerName x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Trainer Active:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensTrainerActive x :: Bool) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Trainer Clients:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensTrainerClients x :: Set UserId) x))] :: [GenChildList (AppType' Trainer)]
+                                             mkDiv x' = map (\f -> f x') [] :: [GenChildList (AppType' Trainer)]}
           updateForm' frm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                            then Nothing
                                                            else Just v') <$> (frm :: AppFormType Trainer
@@ -89,7 +89,7 @@ instance Row Client
           type AppType' Client = App'
           type AppURLType Client = URL AppURL
           type AppFormType Client = AppForm
-          type IdType Client = UserId
+          type IdType Client = ClientId
           createForm _ = do {here <- whereami;
                              frm <- updForm (Just def);
                              liftIO $ logM "Create" DEBUG ("EVENT " ++ "GetClientByIdEvent");
@@ -146,18 +146,18 @@ instance Row Client
                                    Nothing -> do {notFound ();
                                                   appTemplate ("Client" <> " not found.") () $ ((((elt "p" <: menuList) <: fromStringLit "Client ") <: asChild xid) <: fromStringLit " could not be found.")}
                                    Just x -> do {ok ();
-                                                 appTemplate (appPack $ ("Client" <> (" " <> (show $ (id $ (clientId $ x)))))) () $ (((((elt "div" <@ ("class" := "row" :: Attr AppText
-                                                                                                                                                                                AppText)) <: menuList) <: ((elt "dl" <@ ("class" := "row-header" :: Attr AppText
-                                                                                                                                                                                                                                                         AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
-                                                                                                                                                                                                                                                                                                                                      AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdateClient xid) :: Attr AppText
-                                                                                                                                                                                                                                                                                                                                                                                                                                        (AppURLType Client))) <: fromStringLit ("update this " ++ "Client"))))}
-                                       where mkDescList x = map (\f -> f x) [\_ -> asChild (elt "dt" <: fromStringLit "Client Id:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensClientId x :: UserId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Client Name:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensClientName x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Client Active:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensClientActive x :: Bool) x))] :: [GenChildList (AppType' Client)]
-                                             mkDiv x = map (\f -> f x) [] :: [GenChildList (AppType' Client)]}
+                                                 appTemplate (appPack $ ("Client" <> (" " <> (show $ (unClientId $ (clientId $ x)))))) () $ (((((elt "div" <@ ("class" := "row" :: Attr AppText
+                                                                                                                                                                                        AppText)) <: menuList) <: ((elt "dl" <@ ("class" := "row-header" :: Attr AppText
+                                                                                                                                                                                                                                                                 AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
+                                                                                                                                                                                                                                                                                                                                              AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdateClient xid) :: Attr AppText
+                                                                                                                                                                                                                                                                                                                                                                                                                                                (AppURLType Client))) <: fromStringLit ("update this " ++ "Client"))))}
+                                       where mkDescList x' = map (\f -> f x') [\_ -> asChild (elt "dt" <: fromStringLit "Client Id:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensClientId x :: ClientId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Client Name:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensClientName x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Client Active:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensClientActive x :: Bool) x))] :: [GenChildList (AppType' Client)]
+                                             mkDiv x' = map (\f -> f x') [] :: [GenChildList (AppType' Client)]}
           updateForm' frm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                            then Nothing
                                                            else Just v') <$> (frm :: AppFormType Client
@@ -235,13 +235,13 @@ instance Row Exercise
                                                                                                                                                                                                                                                                        AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                     AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdateExercise xid) :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                                                                                                                         (AppURLType Exercise))) <: fromStringLit ("update this " ++ "Exercise"))))}
-                                       where mkDescList x = map (\f -> f x) [\_ -> asChild (elt "dt" <: fromStringLit "Exercise Id:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensExerciseId x :: ExerciseId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Exercise Author:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensExerciseAuthor x :: UserId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Exercise Title:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensExerciseTitle x :: Text) x))] :: [GenChildList (AppType' Exercise)]
-                                             mkDiv x = map (\f -> f x) [\x -> asChild (doTextFormat (getTextFormat x) (appPack (unpack ((\x -> view lensExerciseText x :: Text) x))))] :: [GenChildList (AppType' Exercise)]}
+                                       where mkDescList x' = map (\f -> f x') [\_ -> asChild (elt "dt" <: fromStringLit "Exercise Id:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensExerciseId x :: ExerciseId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Exercise Author:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensExerciseAuthor x :: TrainerId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Exercise Title:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensExerciseTitle x :: Text) x))] :: [GenChildList (AppType' Exercise)]
+                                             mkDiv x' = map (\f -> f x') [\x -> asChild (doTextFormat (getTextFormat x) (appPack (unpack ((\x -> view lensExerciseText x :: Text) x))))] :: [GenChildList (AppType' Exercise)]}
           updateForm' frm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                            then Nothing
                                                            else Just v') <$> (frm :: AppFormType Exercise
@@ -319,20 +319,20 @@ instance Row Program
                                                                                                                                                                                                                                                                     AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                  AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdateProgram xid) :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                                                                                                                     (AppURLType Program))) <: fromStringLit ("update this " ++ "Program"))))}
-                                       where mkDescList x = map (\f -> f x) [\_ -> asChild (elt "dt" <: fromStringLit "Program Id:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramId x :: ProgramId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Program Title:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramTitle x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Program Notes:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramNotes x :: [(Text,
-                                                                                                                                                     Text)]) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Program Circuits:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramCircuits x :: [Circuit]) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Program Author:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramAuthor x :: UserId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Program Clients:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramClients x :: Set UserId) x))] :: [GenChildList (AppType' Program)]
-                                             mkDiv x = map (\f -> f x) [] :: [GenChildList (AppType' Program)]}
+                                       where mkDescList x' = map (\f -> f x') [\_ -> asChild (elt "dt" <: fromStringLit "Program Id:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramId x :: ProgramId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Program Title:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramTitle x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Program Notes:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramNotes x :: [(Text,
+                                                                                                                                                       Text)]) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Program Circuits:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramCircuits x :: [Circuit]) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Program Author:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramAuthor x :: TrainerId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Program Clients:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramClients x :: Set UserId) x))] :: [GenChildList (AppType' Program)]
+                                             mkDiv x' = map (\f -> f x') [] :: [GenChildList (AppType' Program)]}
           updateForm' frm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                            then Nothing
                                                            else Just v') <$> (frm :: AppFormType Program
@@ -410,27 +410,27 @@ instance Row Circuit
                                                                                                                                                                                                                                                                     AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                  AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdateCircuit xid) :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                                                                                                                     (AppURLType Circuit))) <: fromStringLit ("update this " ++ "Circuit"))))}
-                                       where mkDescList x = map (\f -> f x) [\_ -> asChild (elt "dt" <: fromStringLit "Circuit Id:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitId x :: CircuitId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Exercise:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitExercise x :: Maybe ExerciseId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Name:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitName x :: Maybe Char) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Order:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitOrder x :: Maybe Integer) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Rest:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitRest x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Intensity:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitIntensity x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Reps:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitReps x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Tempo:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitTempo x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Sets:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitSets x :: Text) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Circuit Total:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitTotal x :: Text) x))] :: [GenChildList (AppType' Circuit)]
-                                             mkDiv x = map (\f -> f x) [] :: [GenChildList (AppType' Circuit)]}
+                                       where mkDescList x' = map (\f -> f x') [\_ -> asChild (elt "dt" <: fromStringLit "Circuit Id:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitId x :: CircuitId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Exercise:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitExercise x :: Maybe ExerciseId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Name:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitName x :: Maybe Char) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Order:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitOrder x :: Maybe Integer) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Rest:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitRest x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Intensity:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitIntensity x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Reps:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitReps x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Tempo:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitTempo x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Sets:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitSets x :: Text) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Circuit Total:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensCircuitTotal x :: Text) x))] :: [GenChildList (AppType' Circuit)]
+                                             mkDiv x' = map (\f -> f x') [] :: [GenChildList (AppType' Circuit)]}
           updateForm' frm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                            then Nothing
                                                            else Just v') <$> (frm :: AppFormType Circuit
@@ -508,13 +508,13 @@ instance Row ProgramView
                                                                                                                                                                                                                                                                                 AppText)) <: mkDescList x)) <: ((elt "div" <@ ("class" := "row-body" :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                              AppText)) <: mkDiv x)) <: (elt "div" <: ((elt "a" <@ ("href" := AppURL (UpdateProgramView xid) :: Attr AppText
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     (AppURLType ProgramView))) <: fromStringLit ("update this " ++ "ProgramView"))))}
-                                       where mkDescList x = map (\f -> f x) [\_ -> asChild (elt "dt" <: fromStringLit "Program View Id:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramViewId x :: ProgramViewId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Program View Program:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramViewProgram x :: ProgramId) x)),
-                                                                             \_ -> asChild (elt "dt" <: fromStringLit "Program View Note List:"),
-                                                                             \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramViewNoteList x :: [ViewNote]) x))] :: [GenChildList (AppType' ProgramView)]
-                                             mkDiv x = map (\f -> f x) [] :: [GenChildList (AppType' ProgramView)]}
+                                       where mkDescList x' = map (\f -> f x') [\_ -> asChild (elt "dt" <: fromStringLit "Program View Id:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramViewId x :: ProgramViewId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Program View Program:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramViewProgram x :: ProgramId) x)),
+                                                                               \_ -> asChild (elt "dt" <: fromStringLit "Program View Note List:"),
+                                                                               \x -> asChild (elt "dd" <: asChild ((\x -> view lensProgramViewNoteList x :: [ViewNote]) x))] :: [GenChildList (AppType' ProgramView)]
+                                             mkDiv x' = map (\f -> f x') [] :: [GenChildList (AppType' ProgramView)]}
           updateForm' frm = (fieldset $ (ul $ (((\v' t -> if t == pack "cancel"
                                                            then Nothing
                                                            else Just v') <$> (frm :: AppFormType ProgramView

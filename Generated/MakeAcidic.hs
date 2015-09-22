@@ -36,7 +36,7 @@ instance IsAcidic AppState
                         UpdateEvent (\(UpdateProgramViewEvent arg) -> updateProgramViewEvent arg),
                         UpdateEvent (\(DeleteProgramViewEvent arg) -> deleteProgramViewEvent arg)]
 newtype GetTrainerByIdEvent
-  = GetTrainerByIdEvent UserId
+  = GetTrainerByIdEvent TrainerId
     deriving (Typeable)
 instance SafeCopy GetTrainerByIdEvent
     where putCopy (GetTrainerByIdEvent arg) = contain (do {safePut arg;
@@ -65,7 +65,7 @@ instance SafeCopy CreateTrainerEvent
                                                           return ()})
           getCopy = contain (return CreateTrainerEvent <*> safeGet)
 instance Method CreateTrainerEvent
-    where type MethodResult CreateTrainerEvent = UserId
+    where type MethodResult CreateTrainerEvent = TrainerId
           type MethodState CreateTrainerEvent = AppState
 instance UpdateEvent CreateTrainerEvent
 newtype UpdateTrainerEvent
@@ -76,7 +76,7 @@ instance SafeCopy UpdateTrainerEvent
                                                           return ()})
           getCopy = contain (return UpdateTrainerEvent <*> safeGet)
 instance Method UpdateTrainerEvent
-    where type MethodResult UpdateTrainerEvent = UserId
+    where type MethodResult UpdateTrainerEvent = TrainerId
           type MethodState UpdateTrainerEvent = AppState
 instance UpdateEvent UpdateTrainerEvent
 newtype DeleteTrainerEvent
@@ -91,7 +91,7 @@ instance Method DeleteTrainerEvent
           type MethodState DeleteTrainerEvent = AppState
 instance UpdateEvent DeleteTrainerEvent
 newtype GetClientByIdEvent
-  = GetClientByIdEvent UserId
+  = GetClientByIdEvent ClientId
     deriving (Typeable)
 instance SafeCopy GetClientByIdEvent
     where putCopy (GetClientByIdEvent arg) = contain (do {safePut arg;
@@ -120,7 +120,7 @@ instance SafeCopy CreateClientEvent
                                                          return ()})
           getCopy = contain (return CreateClientEvent <*> safeGet)
 instance Method CreateClientEvent
-    where type MethodResult CreateClientEvent = UserId
+    where type MethodResult CreateClientEvent = ClientId
           type MethodState CreateClientEvent = AppState
 instance UpdateEvent CreateClientEvent
 newtype UpdateClientEvent
@@ -131,7 +131,7 @@ instance SafeCopy UpdateClientEvent
                                                          return ()})
           getCopy = contain (return UpdateClientEvent <*> safeGet)
 instance Method UpdateClientEvent
-    where type MethodResult UpdateClientEvent = UserId
+    where type MethodResult UpdateClientEvent = ClientId
           type MethodState UpdateClientEvent = AppState
 instance UpdateEvent UpdateClientEvent
 newtype DeleteClientEvent

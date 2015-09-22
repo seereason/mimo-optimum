@@ -1,6 +1,3 @@
-lens_unUserId :: forall . Iso' UserId Integer
-lens_unUserId = iso (\(UserId x) -> x) UserId
-{-# INLINE lens_unUserId #-}
 lensCircuitExercise :: forall . Lens' Circuit (Maybe ExerciseId)
 lensCircuitExercise f (Circuit x
                                x
@@ -127,13 +124,16 @@ lensUnCircuitId = iso (\(CircuitId x) -> x) CircuitId
 lensClientActive :: forall . Lens' Client Bool
 lensClientActive f (Client x x x) = fmap (\y -> Client x x y) (f x)
 {-# INLINE lensClientActive #-}
-lensClientId :: forall . Lens' Client UserId
+lensClientId :: forall . Lens' Client ClientId
 lensClientId f (Client x x x) = fmap (\y -> Client y x x) (f x)
 {-# INLINE lensClientId #-}
 lensClientName :: forall . Lens' Client Text
 lensClientName f (Client x x x) = fmap (\y -> Client x y x) (f x)
 {-# INLINE lensClientName #-}
-lensExerciseAuthor :: forall . Lens' Exercise UserId
+lensUnClientId :: forall . Iso' ClientId UserId
+lensUnClientId = iso (\(ClientId x) -> x) ClientId
+{-# INLINE lensUnClientId #-}
+lensExerciseAuthor :: forall . Lens' Exercise TrainerId
 lensExerciseAuthor f (Exercise x
                                x
                                x
@@ -160,7 +160,7 @@ lensExerciseTitle f (Exercise x
 lensUnExerciseId :: forall . Iso' ExerciseId Integer
 lensUnExerciseId = iso (\(ExerciseId x) -> x) ExerciseId
 {-# INLINE lensUnExerciseId #-}
-lensProgramAuthor :: forall . Lens' Program UserId
+lensProgramAuthor :: forall . Lens' Program TrainerId
 lensProgramAuthor f (Program x
                              x
                              x
@@ -241,7 +241,7 @@ lensTrainerClients f (Trainer x
                               x
                               x) = fmap (\y -> Trainer x x x y) (f x)
 {-# INLINE lensTrainerClients #-}
-lensTrainerId :: forall . Lens' Trainer UserId
+lensTrainerId :: forall . Lens' Trainer TrainerId
 lensTrainerId f (Trainer x
                          x
                          x
@@ -253,6 +253,9 @@ lensTrainerName f (Trainer x
                            x
                            x) = fmap (\y -> Trainer x y x x) (f x)
 {-# INLINE lensTrainerName #-}
+lensUnTrainerId :: forall . Iso' TrainerId UserId
+lensUnTrainerId = iso (\(TrainerId x) -> x) TrainerId
+{-# INLINE lensUnTrainerId #-}
 lensNoteName :: forall . Lens' ViewNote (Maybe Char)
 lensNoteName f (ViewNote x x x) = fmap (\y -> ViewNote y x x) (f x)
 {-# INLINE lensNoteName #-}
@@ -264,3 +267,6 @@ lensNoteOrder f (ViewNote x
 lensNoteText :: forall . Lens' ViewNote ExerciseId
 lensNoteText f (ViewNote x x x) = fmap (\y -> ViewNote x x y) (f x)
 {-# INLINE lensNoteText #-}
+lens_unUserId :: forall . Iso' UserId Integer
+lens_unUserId = iso (\(UserId x) -> x) UserId
+{-# INLINE lens_unUserId #-}

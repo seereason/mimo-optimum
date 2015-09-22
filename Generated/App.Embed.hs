@@ -20,10 +20,6 @@ instance EmbedAsChild App' ([ViewNote])
                                                                        AppText)) <<: map (\y -> asChild (elt "li" <: asChild y)) x) :: GenChildList App'
 instance EmbedAsChild App' Bool
     where asChild x = asChild (show x) :: GenChildList App'
-instance EmbedAsChild App' UserId
-    where asChild x = (\(UserId _a₁) -> asChild ((elt "span" <@ ("class" := "UserId.UserId._a\8321" :: Attr AppText
-                                                                                                            AppText)) <: asChild (((elt "span" <@ ("class" := "UserId.UserId._unUserId" :: Attr AppText
-                                                                                                                                                                                                AppText)) <: fromStringLit "_un User Id: ") <: (asChild _a₁ :: GenChildList App')))) x :: GenChildList App'
 instance EmbedAsChild App' Circuit
     where asChild x = (\(Circuit _a₁
                                  _a₂
@@ -84,6 +80,10 @@ instance EmbedAsChild App' Client
                                                                                                                                                                                                                                                                                          AppText)) <: fromStringLit "Client Name: ") <: (asChild _a₂ :: GenChildList App')),
                                                                                                                                                                                                                  asChild (((elt "span" <@ ("class" := "Client.Client.clientActive" :: Attr AppText
                                                                                                                                                                                                                                                                                            AppText)) <: fromStringLit "Client Active: ") <: (asChild _a₃ :: GenChildList App'))]) :: [GenChildList App']))) x :: GenChildList App'
+instance EmbedAsChild App' ClientId
+    where asChild x = (\(ClientId _a₁) -> asChild ((elt "span" <@ ("class" := "ClientId.ClientId._a\8321" :: Attr AppText
+                                                                                                                  AppText)) <: asChild (((elt "span" <@ ("class" := "ClientId.ClientId.unClientId" :: Attr AppText
+                                                                                                                                                                                                           AppText)) <: fromStringLit "Un Client Id: ") <: (asChild _a₁ :: GenChildList App')))) x :: GenChildList App'
 instance EmbedAsChild App' Exercise
     where asChild x = (\(Exercise _a₁
                                   _a₂
@@ -172,6 +172,10 @@ instance EmbedAsChild App' Trainer
                                                                                                                                                                                                                                                                                                  AppText)) <: fromStringLit "Trainer Active: ") <: (asChild _a₃ :: GenChildList App')),
                                                                                                                                                                                                                     asChild (((elt "span" <@ ("class" := "Trainer.Trainer.trainerClients" :: Attr AppText
                                                                                                                                                                                                                                                                                                   AppText)) <: fromStringLit "Trainer Clients: ") <: (asChild _a₄ :: GenChildList App'))]) :: [GenChildList App']))) x :: GenChildList App'
+instance EmbedAsChild App' TrainerId
+    where asChild x = (\(TrainerId _a₁) -> asChild ((elt "span" <@ ("class" := "TrainerId.TrainerId._a\8321" :: Attr AppText
+                                                                                                                     AppText)) <: asChild (((elt "span" <@ ("class" := "TrainerId.TrainerId.unTrainerId" :: Attr AppText
+                                                                                                                                                                                                                 AppText)) <: fromStringLit "Un Trainer Id: ") <: (asChild _a₁ :: GenChildList App')))) x :: GenChildList App'
 instance EmbedAsChild App' ViewNote
     where asChild x = (\(ViewNote _a₁
                                   _a₂
@@ -186,3 +190,7 @@ instance EmbedAsChild App' ViewNote
                                                                                                                                                                                                                                                                                                   AppText)) <: fromStringLit "Note Order: ") <: (asChild _a₂ :: GenChildList App')),
                                                                                                                                                                                                                        asChild (((elt "span" <@ ("class" := "ViewNote.ViewNote.noteText" :: Attr AppText
                                                                                                                                                                                                                                                                                                  AppText)) <: fromStringLit "Note Text: ") <: (asChild _a₃ :: GenChildList App'))]) :: [GenChildList App']))) x :: GenChildList App'
+instance EmbedAsChild App' UserId
+    where asChild x = (\(UserId _a₁) -> asChild ((elt "span" <@ ("class" := "UserId.UserId._a\8321" :: Attr AppText
+                                                                                                            AppText)) <: asChild (((elt "span" <@ ("class" := "UserId.UserId._unUserId" :: Attr AppText
+                                                                                                                                                                                                AppText)) <: fromStringLit "_un User Id: ") <: (asChild _a₁ :: GenChildList App')))) x :: GenChildList App'

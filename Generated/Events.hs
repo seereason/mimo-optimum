@@ -1,12 +1,12 @@
-getTrainerByIdEvent :: UserId -> Query AppState (Maybe Trainer)
+getTrainerByIdEvent :: TrainerId -> Query AppState (Maybe Trainer)
 getTrainerByIdEvent i = (getOne . (getEQ i . trainers)) <$> ask
-createTrainerEvent :: Trainer -> Update AppState UserId
+createTrainerEvent :: Trainer -> Update AppState TrainerId
 createTrainerEvent p = do {cvs <- get;
                            let pid' = trainerId p;
                            let p' = p{trainerId = pid'};
                            put cvs{trainers = insert p' (trainers cvs)};
                            return pid'}
-updateTrainerEvent :: Trainer -> Update AppState UserId
+updateTrainerEvent :: Trainer -> Update AppState TrainerId
 updateTrainerEvent p = do {cvs <- get;
                            put cvs{trainers = updateIx (trainerId p) p (trainers cvs)};
                            return (trainerId p)}
@@ -16,16 +16,18 @@ deleteTrainerEvent p = do {cvs <- get;
                            put cvs{trainers = delete p (trainers cvs)}}
 someTrainersEvent :: Int -> Int -> Query AppState ([Trainer])
 someTrainersEvent limit offset = do {cvs <- ask;
-                                     return $ (take limit $ (drop offset $ toDescList (Proxy :: Proxy UserId) (trainers cvs)))}
-getClientByIdEvent :: UserId -> Query AppState (Maybe Client)
+                                     return $ ((if limit > 1
+                                                 then take limit
+                                                 else id) $ (drop offset $ toDescList (Proxy :: Proxy TrainerId) (trainers cvs)))}
+getClientByIdEvent :: ClientId -> Query AppState (Maybe Client)
 getClientByIdEvent i = (getOne . (getEQ i . clients)) <$> ask
-createClientEvent :: Client -> Update AppState UserId
+createClientEvent :: Client -> Update AppState ClientId
 createClientEvent p = do {cvs <- get;
                           let pid' = clientId p;
                           let p' = p{clientId = pid'};
                           put cvs{clients = insert p' (clients cvs)};
                           return pid'}
-updateClientEvent :: Client -> Update AppState UserId
+updateClientEvent :: Client -> Update AppState ClientId
 updateClientEvent p = do {cvs <- get;
                           put cvs{clients = updateIx (clientId p) p (clients cvs)};
                           return (clientId p)}
@@ -35,7 +37,9 @@ deleteClientEvent p = do {cvs <- get;
                           put cvs{clients = delete p (clients cvs)}}
 someClientsEvent :: Int -> Int -> Query AppState ([Client])
 someClientsEvent limit offset = do {cvs <- ask;
-                                    return $ (take limit $ (drop offset $ toDescList (Proxy :: Proxy UserId) (clients cvs)))}
+                                    return $ ((if limit > 1
+                                                then take limit
+                                                else id) $ (drop offset $ toDescList (Proxy :: Proxy ClientId) (clients cvs)))}
 getExerciseByIdEvent :: ExerciseId ->
                         Query AppState (Maybe Exercise)
 getExerciseByIdEvent i = (getOne . (getEQ i . exercises)) <$> ask
@@ -56,7 +60,9 @@ deleteExerciseEvent p = do {cvs <- get;
                             put cvs{exercises = delete p (exercises cvs)}}
 someExercisesEvent :: Int -> Int -> Query AppState ([Exercise])
 someExercisesEvent limit offset = do {cvs <- ask;
-                                      return $ (take limit $ (drop offset $ toDescList (Proxy :: Proxy ExerciseId) (exercises cvs)))}
+                                      return $ ((if limit > 1
+                                                  then take limit
+                                                  else id) $ (drop offset $ toDescList (Proxy :: Proxy ExerciseId) (exercises cvs)))}
 getProgramByIdEvent :: ProgramId -> Query AppState (Maybe Program)
 getProgramByIdEvent i = (getOne . (getEQ i . programs)) <$> ask
 createProgramEvent :: Program -> Update AppState ProgramId
@@ -76,7 +82,9 @@ deleteProgramEvent p = do {cvs <- get;
                            put cvs{programs = delete p (programs cvs)}}
 someProgramsEvent :: Int -> Int -> Query AppState ([Program])
 someProgramsEvent limit offset = do {cvs <- ask;
-                                     return $ (take limit $ (drop offset $ toDescList (Proxy :: Proxy ProgramId) (programs cvs)))}
+                                     return $ ((if limit > 1
+                                                 then take limit
+                                                 else id) $ (drop offset $ toDescList (Proxy :: Proxy ProgramId) (programs cvs)))}
 getCircuitByIdEvent :: CircuitId -> Query AppState (Maybe Circuit)
 getCircuitByIdEvent i = (getOne . (getEQ i . circuits)) <$> ask
 createCircuitEvent :: Circuit -> Update AppState CircuitId
@@ -96,7 +104,9 @@ deleteCircuitEvent p = do {cvs <- get;
                            put cvs{circuits = delete p (circuits cvs)}}
 someCircuitsEvent :: Int -> Int -> Query AppState ([Circuit])
 someCircuitsEvent limit offset = do {cvs <- ask;
-                                     return $ (take limit $ (drop offset $ toDescList (Proxy :: Proxy CircuitId) (circuits cvs)))}
+                                     return $ ((if limit > 1
+                                                 then take limit
+                                                 else id) $ (drop offset $ toDescList (Proxy :: Proxy CircuitId) (circuits cvs)))}
 getProgramViewByIdEvent :: ProgramViewId ->
                            Query AppState (Maybe ProgramView)
 getProgramViewByIdEvent i = (getOne . (getEQ i . programViews)) <$> ask
@@ -120,4 +130,6 @@ deleteProgramViewEvent p = do {cvs <- get;
 someProgramViewsEvent :: Int ->
                          Int -> Query AppState ([ProgramView])
 someProgramViewsEvent limit offset = do {cvs <- ask;
-                                         return $ (take limit $ (drop offset $ toDescList (Proxy :: Proxy ProgramViewId) (programViews cvs)))}
+                                         return $ ((if limit > 1
+                                                     then take limit
+                                                     else id) $ (drop offset $ toDescList (Proxy :: Proxy ProgramViewId) (programViews cvs)))}

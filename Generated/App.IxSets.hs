@@ -1,9 +1,9 @@
 instance Indexable Trainer
-    where empty = ixSet [Ix (empty :: forall . Map UserId
+    where empty = ixSet [Ix (empty :: forall . Map TrainerId
                                                    (Set Trainer)) (flattenWithCalcs noCalcs)]
 type Trainers = IxSet Trainer
 instance Indexable Client
-    where empty = ixSet [Ix (empty :: forall . Map UserId
+    where empty = ixSet [Ix (empty :: forall . Map ClientId
                                                    (Set Client)) (flattenWithCalcs noCalcs)]
 type Clients = IxSet Client
 instance Indexable Exercise
