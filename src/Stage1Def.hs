@@ -11,13 +11,12 @@ import Data.Set
 import Data.Text (Text)
 import Data.UserId (UserId(..))
 import Distribution.License (License(..))
-import Happstack.Foundation ({-(<$>), Data, Typeable,-} PathInfo)
 import Language.Haskell.TH.Path.Graph (SinkType)
 import Language.Haskell.TH.TypeGraph.Shape (fName)
 import Language.Haskell.TH.TypeGraph.Stack (StackElement(StackElement), TypeStack(_typeStack))
 import MIMO.App (AppInfo(..))
 import MIMO.Base (version)
-import MIMO.Hint (Hint(HideColumn, Div, Area))
+import MIMO.Hint (Hint(HideColumn, Div))
 import MIMO.Id (IdField(idField), KeyType(Private, Owner), makeIdType', makeIdInstances)
 import MIMO.Spec (Spec(..))
 import qualified Ports (optimum)
@@ -108,7 +107,7 @@ theAppInfo :: AppInfo
 theAppInfo =
   AppInfo  { _spec = theSpec
            , _indexTypes =
-               let f n = []
+               let f _n = []
                in f
            , _hints = theHints
            }
@@ -141,5 +140,5 @@ theHints =
           case fName fld of
             -- Don't show the exercise text in the multi-view, put it in a
             -- div in the single-view and use a textarea to input it.
-            Right n | n == 'exerciseText -> [HideColumn, Div, Area]
+            Right n | n == 'exerciseText -> [HideColumn, Div]
             _ -> []

@@ -54,6 +54,7 @@ Executable optimum-server
     Build-Depends:
       acid-state,
       applicative-extras,
+      clckwrks,
       data-default-instances-base,
       data-default-instances-containers,
       directory,
@@ -67,6 +68,9 @@ Executable optimum-server
       syb,
       th-orphans,
       unix,
+      uuid,
+      uuid-orphans,
+      uuid-types,
       web-routes
   else
     Hs-Source-Dirs: /usr/share/mimo/Common
@@ -106,13 +110,15 @@ Executable optimum-backups
     th-desugar,
     th-orphans,
     time,
-    time-locale-compat
+    time-locale-compat,
+    userid
   if flag(local-mimo)
     Main-Is: ../../mimo/Exec/Backups.hs
     Hs-Source-Dirs: ../mimo, ../mimo/Common
     Build-Depends:
       acid-state,
       applicative-extras,
+      clckwrks,
       data-default-instances-base,
       data-default-instances-containers,
       directory,
@@ -121,7 +127,10 @@ Executable optimum-backups
       ixset,
       reform,
       seereason-ports,
-      unix
+      unix,
+      uuid-orphans,
+      uuid-types,
+      web-routes
   else
     Main-Is: /usr/share/mimo/Exec/Backups.hs
     Build-Depends: mimo
